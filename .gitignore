@@ -1,0 +1,10 @@
+# use glob syntax.
+
+settings.py
+*.iml
+*.ipr
+*.iws
+*.elc
+*.pyc
+nbproject/*
+

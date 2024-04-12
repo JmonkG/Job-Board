@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load markup %}
+{% load i18n %}
+
+{% block content %}
+<div id="content"> 
+    <div style="margin-bottom:1em">&laquo; <a href="{% url job-list %}">{% trans 'Back' %}</a></div>
+
+    {% if notifications %}
+    <ul id="notifications">
+        {% for notification in notifications %}<li class="{{ notification.type }}">{{ notification.content }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <h2 class="title">{{ job.title }}<span>&nbsp;{% trans 'at' %}</span>&nbsp;{{ job.company_name }}</h2>
+    {% if job.website %}<div><strong>{% trans 'Website' %}:</strong> {{ job.website|urlize }}</div>{% endif %}
+    <div><strong>{% trans 'Category' %}:</strong>&nbsp;{{ job.category }}</div>
+    <div><strong>{% trans 'Type' %}:</strong>&nbsp;{{ job.get_job_type_display }}</div>
+    <div><strong>{% trans 'Location' %}:</strong>
+        {% if job.onsite_required %}
+            {{ job.location }}
+        {% else %}
+            {% trans 'Telecommute' %}
+        {% endif %}&nbsp;
+    </div>
+
+    <div class="desc">
+    {% autoescape on %}{{ job.description|markdown }}{% endautoescape %}
+    </div>
+
+    <div><strong>{% trans 'To apply' %}:</strong> {{ job.to_apply|urlize }}</div>
+
+    <div style="margin-top:1em">&laquo; <a href="{% url job-list %}">{% trans 'Back' %}</a></div>
+</div>
+{% endblock %}

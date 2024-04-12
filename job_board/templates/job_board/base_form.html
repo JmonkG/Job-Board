@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<form id="entry-form" action="." method="POST">
+    {% for field in form %}
+
+        {% if field.errors %}
+            <ol class="errorlist">
+            {% for error in field.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+            </ol>
+        {% endif %}
+        <p {% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
+        {% ifequal field.name "onsite_required" %}
+        {{ field }} <label class="inline">{{ field.label }}</label>
+        {% else %}
+            {{ field.label_tag }} {{ field }}
+        {% endifequal %}
+            <span>{{ field.help_text }}</span>
+        </p>
+    {% endfor %}
+
+    <input type="submit" value="{% trans 'Preview' %}" />
+    <input type="hidden" name="{{ stage_field }}" value="1" />
+</form>
